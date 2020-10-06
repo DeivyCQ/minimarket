@@ -10,7 +10,7 @@ class Categoria:
     def obtener_categoria(self, id_categoria):
         return self.model.get_by_id(id_categoria)
 
-    def obtener_categoriaes(self, order):
+    def obtener_categorias(self, order):
         return self.model.get_all(order)
 
     def buscar_categoria(self, data_categoria):
