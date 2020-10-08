@@ -1,92 +1,92 @@
-from classes.marca import Marca
+from classes.rol import Rol
 from helpers.menu import Menu
 from helpers.helper import print_table, input_data, pregunta
 
-class Marca_controller:
+class Rol_controller:
     def __init__(self):
-        self.marca = Marca()
+        self.rol = Rol()
         self.salir = False
     def menu(self):
         while True:
             try:
                 print('''
                 =============================
-                    Marca de Producto
+                    Rol de Usuario
                 =============================
                 ''')
-                menu = ['Listar Marca', 'Buscar Marca', "Nueva Marca", "Salir"]
+                menu = ['Listar Rol', 'Buscar Rol', "Nuevo Rol", "Salir"]
                 respuesta = Menu(menu).show()
                 
                 if respuesta == 1:
-                    self.listar_marca() # Lista las Marcas de la BD
+                    self.listar_rol() # Lista las Marcas de la BD
                 elif respuesta == 2:
-                    self.buscar_marca() # Busca Marca en base a un ID
+                    self.buscar_rol() # Busca Rol en base a un ID
                 elif respuesta == 3:
-                    self.agregar_marca() # Crea una nuave Marca
+                    self.agregar_rol() # Crea una nuave Rol
                 else:
                     self.salir = True
                     break
             except Exception as e:
                 print(f'{str(e)}')
 
-    def listar_marca(self):
+    def listar_rol(self):
         print('''
         ======================================
-            Lista de Marca de Producto
+            Lista de Rol de Usuario
         ======================================
         ''')
-        marca = self.marca.obtener_marca('id_marca')
-        print(print_table(marca, ['ID', 'descripción']))
+        rol = self.rol.obtener_rol('id_rol')
+        print(print_table(rol, ['ID', 'descripción']))
         input("\nPresione una tecla para continuar...")
 
-    def buscar_marca(self):
+    def buscar_rol(self):
         print('''
         ====================================
-            Buscar Marca de Producto
+            Buscar Rol de Usuario
         ====================================
         ''')
         try:
-            id_marca = input_data("Ingrese el ID de la Marca >> ", "int")
-            marca = self.marca.obtener_marca({'id_marca': id_marca})
-            print(print_table(marca, ['ID', 'descripción']))
+            id_rol = input_data("Ingrese el ID de Rol >> ", "int")
+            rol = self.rol.obtener_rol({'id_rol': id_rol})
+            print(print_table(rol, ['ID', 'descripción']))
 
-            if marca:
-                if pregunta("¿Deseas editar Marca de producto?"):
-                    opciones = ['Editar Marca', 'Eliminar Marca', 'Salir']
+            if rol:
+                if pregunta("¿Deseas editar Rol de Usuario?"):
+                    opciones = ['Editar Rol', 'Eliminar Rol', 'Salir']
                     respuesta = Menu(opciones).show()
                     if respuesta == 1:
-                        self.editar_marca(id_marca)
+                        self.editar_rol(id_rol)
                     elif respuesta == 2:
-                        self.eliminar_marca(id_marca)
+                        self.eliminar_rol(id_rol)
         except Exception as e:
             print(f'{str(e)}')
         input("\nPresione una tecla para continuar...")
 
-    def agregar_marca(self):
+    def agregar_rol(self):
         print('''
         ===============================
-            Crear Marca de Producto
+            Crear Rol de Usuario
         ===============================
         ''')
         try:
-            descripcion = input_data("Ingrese descripción de la Marca >> ")
-            self.marca.guardar_marca({
+            descripcion = input_data("Ingrese descripción de Rol >> ")
+            self.rol.guardar_rol({
                 'descripcion': descripcion
             })
         except Exception as e:
             print(f'{str(e)}')
         print('''
         ==============================================
-            Nueva Marca de Producto agregado !
+            Nuevo Rol de Usuario agregado !
         ==============================================
         ''')
-        self.listar_marca()
+        self.listar_rol()
 
-    def editar_marca(self, id_marca):
+    def editar_rol(self, id_rol):
         try:
-            descripcion = input_data("Ingrese nueva descripción de la Marca de producto >> ")
-            self.marca.modificar_marca({
-                'id_marca': id_marca
+            descripcion = input_data("Ingrese nueva descripción de Rol de Usuario >> ")
+            self.rol.modificar_rol({
+                'id_rol': id_rol
             }, {
                 'descripcion': descripcion
             })
@@ -94,19 +94,19 @@ class Marca_controller:
             print(f'{str(e)}')
         print('''
         =======================================
-            Marca de Producto Editado !
+            Rol de Usuario Editado !
         =======================================
         ''')
 
-    def eliminar_marca(self, id_marca):
+    def eliminar_rol(self, id_rol):
         try:
-            self.marca.eliminar_marca({
-                'id_marca': id_marca
+            self.rol.eliminar_rol({
+                'id_rol': id_rol
             })
         except Exception as e:
             print(f'{str(e)}')
         print('''
         ====================================
-            Marca de Producto Eliminado !
+            Rol de Usuario Eliminado !
         ====================================
         ''')

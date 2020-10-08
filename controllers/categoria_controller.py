@@ -84,7 +84,7 @@ class Categoria_controller:
 
     def editar_categoria(self, id_categoria):
         try:
-            descripcion = input_data("Ingrese el nuevo nombre del Categoría de producto >> ")
+            descripcion = input_data("Ingrese el nueva descripción de la Categoría de Producto >> ")
             self.categoria.modificar_categoria({
                 'id_categoria': id_categoria
             }, {
