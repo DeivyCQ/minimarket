@@ -10,7 +10,7 @@ class Rol:
     def obtener_rol(self, id_rol):
         return self.model.get_by_id(id_rol)
 
-    def obtener_roles(self, order):
+    def obtener_rols(self, order):
         return self.model.get_all(order)
 
     def buscar_rol(self, data_rol):
@@ -21,3 +21,5 @@ class Rol:
 
     def eliminar_rol(self, id_rol):
         return self.model.delete(id_rol)
+
+

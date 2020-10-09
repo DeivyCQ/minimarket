@@ -1,92 +1,92 @@
-from classes.rol import Rol
+from classes.compra import Compra
 from helpers.menu import Menu
 from helpers.helper import print_table, input_data, pregunta
 
-class Rol_controller:
+class Compra_controller:
     def __init__(self):
-        self.rol = Rol()
+        self.compra = Compra()
         self.salir = False
     def menu(self):
         while True:
             try:
                 print('''
                 =============================
-                    Rol de usuario
+                    Compras
                 =============================
                 ''')
-                menu = ['Listar Roles', 'Buscar Rol', "Nuevo Rol", "Salir"]
+                menu = ['Listar Compras', 'Buscar Compra', "Nueva Compra", "Salir"]
                 respuesta = Menu(menu).show()
                 
                 if respuesta == 1:
-                    self.listar_rol() # Lista los roles de la BD
+                    self.listar_compra() # Lista los roles de la BD
                 elif respuesta == 2:
-                    self.buscar_rol() # Busca Rol en base a un ID
+                    self.buscar_compra() # Busca Rol en base a un ID
                 elif respuesta == 3:
-                    self.agregar_rol() # Crea un nuevo Rol
+                    self.agregar_compra() # Crea un nuevo Rol
                 else:
                     self.salir = True
                     break
             except Exception as e:
                 print(f'{str(e)}')
 
-    def listar_rol(self):
+    def listar_compra(self):
         print('''
         ======================================
-            Lista de Roles
+            Lista de Compras
         ======================================
         ''')
-        rol = self.rol.obtener_rol('id_rol')
-        print(print_table(rol, ['ID', 'descripción']))
+        compras = self.compra.obtener_compras('id')
+        print(print_table(compras, ['ID', 'Descripción de compra']))
         input("\nPresione una tecla para continuar...")
 
-    def buscar_rol(self):
+    def buscar_compra(self):
         print('''
         ====================================
-            Buscar Rol de Usuario
+            Buscar Compra
         ====================================
         ''')
         try:
-            id_rol = input_data("Ingrese el ID del Rol >> ", "int")
-            rol = self.rol.obtener_rol({'id_rol': id_rol})
-            print(print_table(rol, ['ID', 'descripción']))
+            id_compra = input_data("Ingrese el ID de la compra >> ", "int")
+            compra = self.compra.obtener_compra({'id_compra': id_compra})
+            print(print_table(compra, ['ID', 'descripción']))
 
-            if rol:
-                if pregunta("¿Deseas editar Rol?"):
-                    opciones = ['Editar Rol', 'Eliminar Rol', 'Salir']
+            if compra:
+                if pregunta("¿Deseas editar Compra?"):
+                    opciones = ['Editar Compra', 'Eliminar Compra', 'Salir']
                     respuesta = Menu(opciones).show()
                     if respuesta == 1:
-                        self.editar_rol(id_rol)
+                        self.editar_compra(id_compra)
                     elif respuesta == 2:
-                        self.eliminar_rol(id_rol)
+                        self.eliminar_compra(id_compra)
         except Exception as e:
             print(f'{str(e)}')
         input("\nPresione una tecla para continuar...")
 
-    def agregar_rol(self):
+    def agregar_compra(self):
         print('''
         ===============================
-            Crear Rol de Usuario
+            Crear Compra
         ===============================
         ''')
         try:
-            descripcion = input_data("Ingrese descripción del Rol >> ")
-            self.rol.guardar_rol({
+            descripcion = input_data("Ingrese descripción de la Compra  |otros campos>> ")
+            self.compra.guardar_compra({
                 'descripcion': descripcion
             })
         except Exception as e:
             print(f'{str(e)}')
         print('''
         ==============================================
-            Nuevo Rol agregado !
+            Nueva compra registrada !
         ==============================================
         ''')
-        self.listar_rol()
+        self.listar_compra()
 
-    def editar_rol(self, id_rol):
+    def editar_compra(self, id_compra):
         try:
-            descripcion = input_data("Ingrese nueva descripción del Rol >> ")
-            self.rol.modificar_rol({
-                'id_rol': id_rol
+            descripcion = input_data("Ingrese nueva descripción de la Compra >> ")
+            self.compra.modificar_compra({
+                'id_compra': id_compra
             }, {
                 'descripcion': descripcion
             })
@@ -94,19 +94,19 @@ class Rol_controller:
             print(f'{str(e)}')
         print('''
         =======================================
-            Rol Editado !
+            Compra Editada !
         =======================================
         ''')
 
-    def eliminar_rol(self, id_rol):
+    def eliminar_compra(self, id_compra):
         try:
-            self.rol.eliminar_rol({
-                'id_rol': id_rol
+            self.compra.eliminar_compra({
+                'id_compra': id_compra
             })
         except Exception as e:
             print(f'{str(e)}')
         print('''
         ====================================
-           Rol Eliminado !
+           Compra Eliminada !
         ====================================
         ''')

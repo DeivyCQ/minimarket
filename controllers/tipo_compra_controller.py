@@ -10,19 +10,19 @@ class Tipo_compra_controller:
         while True:
             try:
                 print('''
-                ======================
-                    Tipo de Compra
-                ======================
+                =============================
+                    Tipo de compra
+                =============================
                 ''')
-                menu = ['Listar Tipo de Compra', 'Buscar Tipo de Compra', "Nuevo Tipo de Compra", "Salir"]
+                menu = ['Listar Tipos de compra', 'Buscar Tipo de compra', "Nuevo Tipo de compra", "Salir"]
                 respuesta = Menu(menu).show()
                 
                 if respuesta == 1:
-                    self.listar_tipo_compra() # Lista las Tipo de Compra de la BD
+                    self.listar_tipo_compra() # Lista los roles de la BD
                 elif respuesta == 2:
-                    self.buscar_tipo_compra() # Busca Tipo de Compra en base a un ID
+                    self.buscar_tipo_compra() # Busca Rol en base a un ID
                 elif respuesta == 3:
-                    self.agregar_tipo_compra() # Crea una nuave Tipo de Compra
+                    self.agregar_tipo_compra() # Crea un nuevo Rol
                 else:
                     self.salir = True
                     break
@@ -31,28 +31,28 @@ class Tipo_compra_controller:
 
     def listar_tipo_compra(self):
         print('''
-        ===============================
-            Lista de Tipo de Compra
-        ===============================
+        ======================================
+            Lista de Tipos de compra
+        ======================================
         ''')
-        tipo_compra = self.tipo_compra.obtener_tipo_compra('id_tipo_compra')
+        tipo_compra = self.tipo_compra.obtener_tipo_compras('id_tipo_compra')
         print(print_table(tipo_compra, ['ID', 'descripción']))
         input("\nPresione una tecla para continuar...")
 
     def buscar_tipo_compra(self):
         print('''
-        =============================
-            Buscar Tipo de Compra
-        =============================
+        ====================================
+            Buscar Rol de Usuario
+        ====================================
         ''')
         try:
-            id_tipo_compra = input_data("Ingrese el ID de Tipo de Compra >> ", "int")
+            id_tipo_compra = input_data("Ingrese el ID del Tipo de compra >> ", "int")
             tipo_compra = self.tipo_compra.obtener_tipo_compra({'id_tipo_compra': id_tipo_compra})
             print(print_table(tipo_compra, ['ID', 'descripción']))
 
             if tipo_compra:
-                if pregunta("¿Deseas editar Tipo de Compra?"):
-                    opciones = ['Editar Tipo de Compra', 'Eliminar Tipo de Compra', 'Salir']
+                if pregunta("¿Deseas editar Tipo de compra?"):
+                    opciones = ['Editar Tipo de compra', 'Eliminar Tipo de compra', 'Salir']
                     respuesta = Menu(opciones).show()
                     if respuesta == 1:
                         self.editar_tipo_compra(id_tipo_compra)
@@ -64,27 +64,27 @@ class Tipo_compra_controller:
 
     def agregar_tipo_compra(self):
         print('''
-        ============================
-            Crear Tipo de Compra
-        ============================
+        ===============================
+            Crear Tipo de compra
+        ===============================
         ''')
         try:
-            descripcion = input_data("Ingrese descripción de Tipo de Compra >> ")
+            descripcion = input_data("Ingrese descripción del Tipo de compra >> ")
             self.tipo_compra.guardar_tipo_compra({
                 'descripcion': descripcion
             })
         except Exception as e:
             print(f'{str(e)}')
         print('''
-        =======================================
-            Nuevo Tipo de Compra agregado !
-        =======================================
+        ==============================================
+            Nuevo Tipo de compra agregado !
+        ==============================================
         ''')
         self.listar_tipo_compra()
 
     def editar_tipo_compra(self, id_tipo_compra):
         try:
-            descripcion = input_data("Ingrese nueva descripción de Tipo de Compra >> ")
+            descripcion = input_data("Ingrese nueva descripción del Tipo de compra >> ")
             self.tipo_compra.modificar_tipo_compra({
                 'id_tipo_compra': id_tipo_compra
             }, {
@@ -93,9 +93,9 @@ class Tipo_compra_controller:
         except Exception as e:
             print(f'{str(e)}')
         print('''
-        ================================
-            Tipo de Compra Editado !
-        ================================
+        =======================================
+            Tipo de compra Editado !
+        =======================================
         ''')
 
     def eliminar_tipo_compra(self, id_tipo_compra):
@@ -106,7 +106,7 @@ class Tipo_compra_controller:
         except Exception as e:
             print(f'{str(e)}')
         print('''
-        ==================================
-            Tipo de Compra Eliminado !
-        ==================================
+        ====================================
+           Tipo de compra Eliminado !
+        ====================================
         ''')
