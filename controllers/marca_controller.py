@@ -35,7 +35,7 @@ class Marca_controller:
             Lista de Marca de Producto
         ======================================
         ''')
-        marca = self.marca.obtener_marca('id_marca')
+        marca = self.marca.obtener_marcas('id_marca')
         print(print_table(marca, ['ID', 'descripción']))
         input("\nPresione una tecla para continuar...")
 

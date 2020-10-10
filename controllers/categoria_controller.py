@@ -35,8 +35,8 @@ class Categoria_controller:
             Lista de Categoría de Producto
         ======================================
         ''')
-        categoria = self.categoria.obtener_categoria('id_categoria')
-        print(print_table(categoria, ['ID', 'descripción']))
+        categoria = self.categoria.obtener_categorias('id_categoria')
+        print(print_table(categoria, ['ID', 'Descripción']))
         input("\nPresione una tecla para continuar...")
 
     def buscar_categoria(self):
@@ -112,5 +112,5 @@ class Categoria_controller:
         ''')
 
 
-categoria = Categoria_controller()
-categoria.menu()
+# categoria = Categoria_controller()
+# categoria.menu()

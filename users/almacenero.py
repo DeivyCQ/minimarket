@@ -1,5 +1,7 @@
 from helpers.menu import Menu
-
+from controllers.categoria_controller import Categoria_controller
+from controllers.marca_controller import Marca_controller
+from controllers.producto_controller import Producto_controller
 
 users = {}
 
@@ -37,6 +39,7 @@ def iniciar_sesion():
 
     if usuario in users and users[usuario] == password:
         print("\nSesion Iniciada")
+        almacenero()
     else:
         print("\nNo Existe el Usuario o Error de Contraseña")
 
@@ -47,14 +50,20 @@ def almacenero():
             Almacen
         ================
         ''')
-        menu_principal = ['salir' ]
+        menu_principal = ['Categoría', 'Marca', 'Producto', 'salir' ]
         respuesta = Menu(menu_principal).show()
         if respuesta == 1:
-           pass
+            categoria = Categoria_controller()
+        #    if categoria:
+            categoria.menu()
         elif respuesta == 2:
-            pass
+            marca = Marca_controller()
+            if marca:
+                marca.menu()
         elif respuesta == 3:
-            pass
+            producto = Producto_controller()
+            if producto:
+                producto.menu()
         elif respuesta == 4:
             pass
 
@@ -63,3 +72,5 @@ def almacenero():
         print('\n Se interrumpio la aplicación')
     except Exception as e:
         print(f'{str(e)}')
+
+# almacenero()
