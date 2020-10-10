@@ -73,12 +73,12 @@ class Producto_controller:
         unidad_medida_compra = input_data("Ingrese unidad de medida de compra del Producto >> ")
         unidad_medida_venta = input_data("Ingrese unidad de medida de venta del Producto >> ")
         self.producto.guardar_producto({
-            'descripcion': descripcion
-            'id_categoria': id_categoria
-            'id_marca': id_marca
-            'stock': stock
-            'precio': precio
-            'unidad_medida_compra': unidad_medida_compra
+            'descripcion': descripcion,
+            'id_categoria': id_categoria,
+            'id_marca': id_marca,
+            'stock': stock,
+            'precio': precio,
+            'unidad_medida_compra': unidad_medida_compra,
             'unidad_medida_venta': unidad_medida_venta
         })
         print('''
@@ -100,12 +100,12 @@ class Producto_controller:
         self.producto.modificar_producto({
             'id_producto': id_producto
         }, {
-            'descripcion': descripcion
-            'id_categoria': id_categoria
-            'id_marca': id_marca
-            'stock': stock
-            'precio': precio
-            'unidad_medida_compra': unidad_medida_compra
+            'descripcion': descripcion,
+            'id_categoria': id_categoria,
+            'id_marca': id_marca,
+            'stock': stock,
+            'precio': precio,
+            'unidad_medida_compra': unidad_medida_compra,
             'unidad_medida_venta': unidad_medida_venta
         })
         print('''
