@@ -110,3 +110,7 @@ class Categoria_controller:
             Categoría de Producto Eliminado !
         ====================================
         ''')
+
+
+categoria = Categoria_controller()
+categoria.menu()

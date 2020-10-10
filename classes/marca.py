@@ -23,3 +23,5 @@ class Marca:
         return self.model.delete(id_marca)
 
 
+marca = Marca()
+print(marca)

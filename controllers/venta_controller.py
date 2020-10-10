@@ -4,7 +4,8 @@ from helpers.menu import Menu
 
 class Venta_controller:
     def __init__(self):
-        self.venta = Venta()
+        self.venta_cabecera = Venta_cabecera()
+        self.venta_detalle = Venta_detalle()
         self.salir = False
 
     def menu(self):
@@ -32,12 +33,14 @@ class Venta_controller:
 
     def listar_ventas(self):
         print('''
-        =======================
+        ======================
             Lista de Venta
-        =======================
+        ======================
         ''')
-        ventas = self.producto.obtener_ventas_cabecera_('id_venta_cabecera')
-        print(print_table(ventas, ['ID', 'Tipo', 'Comprobante', 'Fecha', 'Precio Total', 'Precio', 'UM Compra', 'UM Venta']))
+        ventas_cabecera = self.venta_cabecera.obtener_ventas_cabecera('id_venta_cabecera')
+        ventas_detalle = self.venta_detalle.obtener_ventas_detalle('id_venta_detalle')
+        print(print_table(ventas_cabecera, ['ID', 'Tipo', 'Comprobante', 'Fecha', 'Precio']))
+        print(print_table(ventas_detalle, ['ID', 'Posicion', 'ID Producto', 'Descripción', 'Cantidad', 'UM', 'PU', 'Precio Total']))
         input("\nPresione una tecla para continuar...")
 
     def buscar_venta(self):
@@ -47,78 +50,112 @@ class Venta_controller:
         ====================
         ''')
         try:
-            id_venta = input_data("Ingrese el ID del Producto >> ", "int")
-            producto = self.producto.obtener_venta({'id_venta': id_venta})
-            print(print_table(libros, ['ID', 'Descripción', 'Categoría', 'Marca', 'Stock', 'Precio', 'UM Compra', 'UM Venta']))
-
-            if producto:
-                if pregunta("¿Deseas dar mantenimiento al Producto?"):
-                    opciones = ['Editar Producto', 'Eliminar Producto', 'Salir']
+            id_venta = input_data("Ingrese el ID de la Venta >> ", "int")
+            venta_cabecera = self.venta_cabecera.obtener_ventas_cabecera({'id_venta_cabecera': id_venta})
+            venta_detalle = self.venta_detalle.obtener_ventas_detalle({'id_venta_detalle': id_venta})
+            print(print_table(ventas_cabecera, ['ID', 'Tipo', 'Comprobante', 'Fecha', 'Precio']))
+            print(print_table(ventas_detalle, ['ID', 'Posicion', 'ID Producto', 'Descripción', 'Cantidad', 'UM', 'PU', 'Precio Total']))
+            
+            if venta_cabecera:
+                if pregunta("¿Deseas dar mantenimiento a la Venta?"):
+                    opciones = ['Editar Venta', 'Eliminar Venta', 'Salir']
                     respuesta = Menu(opciones).show()
                     if respuesta == 1:
-                        self.editar_venta(id_venta)
+                        self.editar_venta_cabecera(id_venta)
+                        self.editar_venta_detalle(id_venta)
                     elif respuesta == 2:
-                        self.eliminar_venta(id_venta)
+                        self.eliminar_venta_cabecera(id_venta)
+                        self.eliminar_venta_detalle(id_venta)
         except Exception as e:
             print(f'{str(e)}')
         input("\nPresione una tecla para continuar...")
 
     def insertar_venta(self):
-        descripcion = input_data("Ingrese descripción del Producto >> ")
-        id_categoria = input_data("Ingrese categoría del Producto >> ", "int")
-        id_marca = input_data("Ingrese marca del Producto >> ", "int")
-        stock = input_data("Ingrese stock inicial del Producto >> ", "float")
-        precio = input_data("Ingrese precio del Producto >> ", "float")
-        unidad_medida_compra = input_data("Ingrese unidad de medida de compra del Producto >> ")
-        unidad_medida_venta = input_data("Ingrese unidad de medida de venta del Producto >> ")
-        self.producto.guardar_venta({
-            'descripcion': descripcion
-            'id_categoria': id_categoria
-            'id_marca': id_marca
-            'stock': stock
-            'precio': precio
-            'unidad_medida_compra': unidad_medida_compra
-            'unidad_medida_venta': unidad_medida_venta
+        print('''
+        ==================================
+            Datos de Cabecera de Venta
+        ==================================
+        ''')        
+        tipo = input_data("Ingrese Tipo de Venta >> ")
+        comprobante = input_data("Ingrese Comprobante de Venta >> ")
+        fecha = input_data("Ingrese Fecha de Venta >> ")
+        precio_total = input_data("Ingrese Precio total >> ", "int")
+        
+        print('''
+        =================================
+            Datos de Detalle de Venta
+        =================================
+        ''')
+        posicion = input_data("Ingrese Posición >> ", "int")
+        id_producto = input_data("Ingrese ID Producto >> ", "int")
+        descripcion = input_data("Ingrese del Producto >> ")
+        cantidad = input_data("Ingrese del Producto >> ", "int")
+        unidad_medida = input_data("Ingrese UM del Producto >> ", "int")
+        precio_unitario = input_data("Ingrese Precio Unitario >> ", "int")
+        precio_item_total = input_data("Ingrese Precio Total >> ", "int")
+
+        self.venta_cabecera.guardar_venta_cabecera({
+            'tipo': tipo,
+            'comprobante': comprobante,
+            'fecha': fecha,
+            'precio': precio_total
+        })
+        self.venta_detalle.guardar_venta_detalle({
+            'posicion': posicion,
+            'id_producto': id_producto,
+            'descripcion': descripcion,
+            'cantidad': cantidad,
+            'unidad_medida': unidad_medida,
+            'precio_unitario': precio_unitario,
+            'precio_total': precio_item_total
         })
         print('''
         =================================
-            Nuevo Producto agregado !
+            Nueva Venta agregado !
         =================================
         ''')
         self.listar_ventas()
 
     def editar_venta(self, id_venta):
-        descripcion = input_data("Ingrese nueva descripción del producto >> ")
-        id_categoria = input_data("Ingrese nueva categoría del Producto >> ", "int")
-        id_marca = input_data("Ingrese nueva marca del Producto >> ", "int")
-        stock = input_data("Ingrese nuevo stock inicial del Producto >> ", "float")
-        precio = input_data("Ingrese nuevo precio del Producto >> ", "float")
-        unidad_medida_compra = input_data("Ingrese nueva unidad de medida de compra del Producto >> ")
-        unidad_medida_venta = input_data("Ingrese nueva unidad de medida de venta del Producto >> ")
+        print('''
+        =================================
+            Datos de Detalle de Venta
+        =================================
+        ''')
+        posicion = input_data("Ingrese Posición >> ", "int")
+        id_producto = input_data("Ingrese ID Producto >> ", "int")
+        descripcion = input_data("Ingrese del Producto >> ")
+        cantidad = input_data("Ingrese del Producto >> ", "int")
+        unidad_medida = input_data("Ingrese UM del Producto >> ", "int")
+        precio_unitario = input_data("Ingrese Precio Unitario >> ", "int")
+        precio_item_total = input_data("Ingrese Precio Total >> ", "int")
 
-        self.producto.modificar_venta({
-            'id_venta': id_venta
+        self.venta_detalle.modificar_venta_detalle({
+            'id_venta_detalle': id_venta
         }, {
-            'descripcion': descripcion
-            'id_categoria': id_categoria
-            'id_marca': id_marca
-            'stock': stock
-            'precio': precio
-            'unidad_medida_compra': unidad_medida_compra
-            'unidad_medida_venta': unidad_medida_venta
+            'posicion': posicion,
+            'id_producto': id_producto,
+            'descripcion': descripcion,
+            'cantidad': cantidad,
+            'unidad_medida': unidad_medida,
+            'precio_unitario': precio_unitario,
+            'precio_total': precio_item_total
         })
         print('''
         ==========================
-            Producto editado !
+            Venta editado !
         ==========================
         ''')
 
     def eliminar_venta(self, id_venta):
-        self.producto.eliminar_venta({
-            'id_venta': id_venta
+        self.venta_cabecera.eliminar_venta_cabecera({
+            'id_venta_cabecera': id_venta
+        })
+        self.venta_detalle.eliminar_venta_detalle({
+            'id_venta_detalle': id_venta
         })
         print('''
         =========================
-            Producto Eliminado !
+            Venta Eliminado !
         =========================
         ''')

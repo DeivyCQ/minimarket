@@ -83,3 +83,7 @@ class Conexion:
         query = f'DELETE FROM {self.table_name} WHERE {"".join(map(str, id_object.keys()))} = {"".join(map(str, id_object.values()))}'
         self.ejecutar_sentencia(query)
         return True
+
+
+# conn = Conexion('marca')
+# print(conn)
