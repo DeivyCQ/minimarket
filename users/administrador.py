@@ -1,3 +1,4 @@
+from controllers.categoria_controller import Categoria_controller
 from helpers.menu import Menu
 from helpers.helper import input_data, print_table, pregunta
 
@@ -49,10 +50,11 @@ def administrador():
             Sistema Administrativo
         ================================
         ''')
-        menu_principal = ['salir' ]
+        menu_principal = ['categoria', 'salir' ]
         respuesta = Menu(menu_principal).show()
         if respuesta == 1:
-           pass
+           categoria = Categoria_controller()
+           categoria.menu()
         elif respuesta == 2:
             pass
         elif respuesta == 3:

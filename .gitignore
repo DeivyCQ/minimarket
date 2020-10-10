@@ -128,10 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .myenv/
-<<<<<<< HEAD
-
-connection/*
-sistema_minimarket.sql
-=======
-.controllers/
->>>>>>> deivy
+.connection/

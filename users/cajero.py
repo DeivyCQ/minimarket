@@ -37,6 +37,7 @@ def iniciar_sesion():
 
     if usuario in users and users[usuario] == password:
         print("\nSesion Iniciada")
+        cajero()
     else:
         print("\nNo Existe el Usuario o Error de Contraseña")
 
