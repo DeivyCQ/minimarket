@@ -84,7 +84,7 @@ class Marca_controller:
 
     def editar_marca(self, id_marca):
         try:
-            descripcion = input_data("Ingrese nueva descripción de la marca de la Marca de producto >> ")
+            descripcion = input_data("Ingrese nueva descripción de la Marca de producto >> ")
             self.marca.modificar_marca({
                 'id_marca': id_marca
             }, {
