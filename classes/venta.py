@@ -10,7 +10,7 @@ class Venta_cabecera:
     def obtener_venta_cabecera(self, id_venta_cabecera):
         return self.model.get_by_id(id_venta_cabecera)
 
-    def obtener_venta_cabeceras(self, order):
+    def obtener_ventas_cabecera(self, order):
         return self.model.get_all(order)
 
     def obtener_ventas_cabecera_inner(self, order):
@@ -25,7 +25,6 @@ class Venta_cabecera:
     def eliminar_venta_cabecera(self, id_venta_cabecera):
         return self.model.delete(id_venta_cabecera)
 
-
 class Venta_detalle:
     def __init__(self):
         self.model = Conexion('venta_detalle')
@@ -36,10 +35,10 @@ class Venta_detalle:
     def obtener_venta_detalle(self, id_venta_detalle):
         return self.model.get_by_id(id_venta_detalle)
 
-    def obtener_venta_detalles(self, order):
+    def obtener_ventas_detalle(self, order):
         return self.model.get_all(order)
 
-    def obtener_ventas_cabecera_inner(self, order):
+    def obtener_ventas_detalle_inner(self, order):
         return self.model.get_all_inner(fields_select, table_select, order)
 
     def buscar_venta_detalle(self, data_venta_detalle):
