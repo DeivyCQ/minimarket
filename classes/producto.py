@@ -4,6 +4,9 @@ class Producto:
     def __init__(self):
         self.model = Conexion('producto')
 
+    def obtener_campos_claves(self):
+        return self.model.get_fields_pk_and_fk()
+
     def guardar_producto(self, producto):
         return self.model.insert(producto)
 
@@ -14,6 +17,7 @@ class Producto:
         return self.model.get_all(order)
 
     def obtener_productos_inner(self, order):
+        table_select = self.obtener_campos_claves()
         return self.model.get_all_inner(fields_select, table_select, order)
 
     def buscar_producto(self, data_producto):

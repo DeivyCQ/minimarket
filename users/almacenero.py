@@ -54,8 +54,8 @@ def almacenero():
         respuesta = Menu(menu_principal).show()
         if respuesta == 1:
             categoria = Categoria_controller()
-        #    if categoria:
-            categoria.menu()
+            if categoria:
+                categoria.menu()
         elif respuesta == 2:
             marca = Marca_controller()
             if marca:

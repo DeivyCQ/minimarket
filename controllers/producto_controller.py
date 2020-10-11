@@ -1,11 +1,14 @@
 from classes.producto import Producto
+from classes.marca import Marca
+from classes.categoria import Categoria
 from helpers.helper import input_data, print_table, pregunta
 from helpers.menu import Menu
-
 
 class Producto_controller:
     def __init__(self):
         self.producto = Producto()
+        self.marca = Marca()
+        self.categoria = Categoria()
         self.salir = False
 
     def menu(self):
@@ -36,9 +39,10 @@ class Producto_controller:
         ==========================
             Lista de Productos
         ==========================
-        ''')
-        libros = self.producto.obtener_productos('id_producto')
-        print(print_table(libros, ['ID', 'Descripción', 'Categoría', 'Marca', 'Stock', 'Precio', 'UM Compra', 'UM Venta']))
+        ''')        
+        productos = self.producto.obtener_productos('id_producto')
+        # productos = self.producto.obtener_productos_inner('id_producto')
+        print(print_table(productos, ['ID', 'Descripción', 'Categoría', 'Marca', 'Stock', 'Precio', 'UM Compra', 'UM Venta'], [3,70,15,15,15,15,20,20]))
         input("\nPresione una tecla para continuar...")
 
     def buscar_producto(self):
@@ -50,7 +54,7 @@ class Producto_controller:
         try:
             id_producto = input_data("Ingrese el ID del Producto >> ", "int")
             producto = self.producto.obtener_producto({'id_producto': id_producto})
-            print(print_table(libros, ['ID', 'Descripción', 'Categoría', 'Marca', 'Stock', 'Precio', 'UM Compra', 'UM Venta']))
+            print(print_table(producto, ['ID', 'Descripción', 'Categoría', 'Marca', 'Stock', 'Precio', 'UM Compra', 'UM Venta'], [3,70,15,15,15,15,20,20]))
 
             if producto:
                 if pregunta("¿Deseas dar mantenimiento al Producto?"):
@@ -66,7 +70,15 @@ class Producto_controller:
 
     def insertar_producto(self):
         descripcion = input_data("Ingrese descripción del Producto >> ")
-        id_categoria = input_data("Ingrese categoría del Producto >> ", "int")
+        # Listar Categorías
+        print('\n>>>>>>>> Elegir categoría del producto <<<<<<<<')
+        categoria = self.categoria.obtener_categorias('id_categoria')
+        print(print_table(categoria, ['ID', 'Descripción'], [2, 20]))
+        id_categoria = input_data("Ingrese ID de categoría del Producto >> ", "int")
+        # Listar Marca
+        print('\n>>>>>>>> Elegir marca del Producto <<<<<<<<')
+        marca = self.marca.obtener_marcas('id_marca')
+        print(print_table(marca, ['ID', 'Descripción'], [2, 20]))
         id_marca = input_data("Ingrese marca del Producto >> ", "int")
         stock = input_data("Ingrese stock inicial del Producto >> ", "float")
         precio = input_data("Ingrese precio del Producto >> ", "float")

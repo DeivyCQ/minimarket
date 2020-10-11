@@ -1,30 +1,45 @@
 from prettytable import PrettyTable
 
-def print_table(data, header=[]):
+def print_table(data, header=[], width_column=[]):
+    max_width = {}
     tabla = 'Algo ocurrio mal'
     if not data:
         raise ValueError('No hay ningún dato para mostrar')
-
+    
+    if width_column:
+        max_width = table_width_column(header, width_column)
+    
     if isinstance(data, list):
         if isinstance(data[0], dict):
             header = list(data[0].keys())
             tabla = PrettyTable(header)
+            tabla._max_width = max_width
             for row in data:
                 tabla.add_row(list(row.values()))
         elif isinstance(data[0], tuple):
             header = table_header(data[0], header)
             tabla = PrettyTable(header)
+            tabla._max_width = max_width
             for row in data:
                 tabla.add_row(list(row))
     elif isinstance(data, dict):
         header = list(data.keys())
         tabla = PrettyTable(header)
+        tabla._max_width = max_width
         tabla.add_row(list(data.values()))
     elif isinstance(data, tuple):
         header = table_header(data, header)
         tabla = PrettyTable(header)
+        tabla._max_width = max_width
         tabla.add_row(list(data))
     return tabla
+
+def table_width_column(header, width_column):
+    max_width = {}
+    for index, h in enumerate(header):
+        max_width[h] = width_column[index]
+    return max_width
+
 
 def table_header(data, head):
     if not head:
