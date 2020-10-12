@@ -93,3 +93,5 @@ class Tipo_venta_controller:
             Tipo de Venta Eliminado !
         =================================
         ''')
+
+

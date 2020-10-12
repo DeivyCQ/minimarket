@@ -4,8 +4,8 @@ class Venta_cabecera:
     def __init__(self):
         self.model = Conexion('venta_cabecera')
 
-    def guardar_venta_cabecera(self, venta_cabecera):
-        return self.model.insert(venta_cabecera)
+    def guardar_venta_cabecera(self, venta_cabecera, campo_clave):
+        return self.model.insert_return_id(venta_cabecera, campo_clave)
 
     def obtener_venta_cabecera(self, id_venta_cabecera):
         return self.model.get_by_id(id_venta_cabecera)

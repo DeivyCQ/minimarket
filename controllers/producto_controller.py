@@ -102,7 +102,14 @@ class Producto_controller:
 
     def editar_producto(self, id_producto):
         descripcion = input_data("Ingrese nueva descripción del producto >> ")
+        # Listar Categorías
+        print('\n>>>>>>>> Elegir categoría del producto <<<<<<<<')
+        categoria = self.categoria.obtener_categorias('id_categoria')
+        print(print_table(categoria, ['ID', 'Descripción'], [2, 20]))
         id_categoria = input_data("Ingrese nueva categoría del Producto >> ", "int")
+        print('\n>>>>>>>> Elegir marca del Producto <<<<<<<<')
+        marca = self.marca.obtener_marcas('id_marca')
+        print(print_table(marca, ['ID', 'Descripción'], [2, 20]))
         id_marca = input_data("Ingrese nueva marca del Producto >> ", "int")
         stock = input_data("Ingrese nuevo stock inicial del Producto >> ", "float")
         precio = input_data("Ingrese nuevo precio del Producto >> ", "float")

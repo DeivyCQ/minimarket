@@ -21,7 +21,3 @@ class Marca:
 
     def eliminar_marca(self, id_marca):
         return self.model.delete(id_marca)
-
-
-marca = Marca()
-print(marca)

@@ -55,7 +55,7 @@ class Conexion:
     def get_by_id(self, id_object):
         query = f'SELECT * FROM {self.table_name} WHERE {"".join(map(str, id_object.keys()))} = {"".join(map(str, id_object.values()))}'
         self.cursor.execute(query)
-        return self.cursor.fetchone()
+        return self.cursor.fetchall()
 
     def get_by_column(self, data):
         list_select_where = []
@@ -78,9 +78,17 @@ class Conexion:
 
     def insert(self, data):
         values = "'" + "', '".join(map(str, data.values())) + "'"
-        query = f'INSERT INTO {self.table_name} ({", ".join(data.keys())}) VALUES ({values})' #'Charly', 'Chinchay', 1989-09-20'
+        query = f'INSERT INTO {self.table_name} ({", ".join(data.keys())}) VALUES ({values})'
         self.ejecutar_sentencia(query)
         return True
+
+    def insert_return_id(self, data, id):
+        values = "'" + "', '".join(map(str, data.values())) + "'"
+        query = f'INSERT INTO {self.table_name} ({", ".join(data.keys())}) VALUES ({values}) RETURNING {id}'
+        self.cursor.execute(query)
+        self.commit()
+        id_row = self.cursor.fetchone()[0]
+        return id_row
 
     def update(self, id_object, data):
         list_update = []

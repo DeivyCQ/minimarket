@@ -1,5 +1,5 @@
 from helpers.menu import Menu
-
+from controllers.venta_controller import Venta_controller
 
 users = {}
 
@@ -49,10 +49,12 @@ def cajero():
             Sistema de Caja
         ========================
         ''')
-        menu_principal = ['salir' ]
+        menu_principal = ['Venta', 'salir' ]
         respuesta = Menu(menu_principal).show()
         if respuesta == 1:
-           pass
+            venta = Venta_controller()
+            if venta:
+                venta.menu()
         elif respuesta == 2:
             pass
         elif respuesta == 3:
